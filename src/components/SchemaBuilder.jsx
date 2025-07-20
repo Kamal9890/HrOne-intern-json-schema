@@ -21,18 +21,34 @@ export default function SchemaBuilder() {
   };
 
   const handleAddNestedField = (parentId) => {
-    const addToNested = (items) =>
-      items.map((item) => {
-        if (item.id === parentId) {
-          return {
-            ...item,
-            children: [...(item.children || []), createField()],
-          };
-        }
-        return { ...item, children: addToNested(item.children || []) };
-      });
-    setFields(addToNested(fields));
+  const addToNested = (items) => {
+    return items.map((item) => {
+      if (item.id === parentId) {
+        const newChild = {
+          id: uuid(),
+          key: "",
+          type: "",
+          children: [],
+          showOptions: true,
+        };
+        return {
+          ...item,
+          children: [...item.children, newChild],
+        };
+      } else if (item.children.length > 0) {
+        return {
+          ...item,
+          children: addToNested(item.children),
+        };
+      } else {
+        return item;
+      }
+    });
   };
+
+  setFields((prevFields) => addToNested(prevFields));
+};
+
 
   const deleteField = (id) => {
     const remove = (items) =>
