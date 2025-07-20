@@ -3,6 +3,8 @@ import { Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import FieldRenderer from "./FieldRenderer";
 import { createField, buildJSON } from "../utils/utils.js";
+import { v4 as uuid } from 'uuid';
+
 
 export default function SchemaBuilder() {
   const [fields, setFields] = useState([]);
