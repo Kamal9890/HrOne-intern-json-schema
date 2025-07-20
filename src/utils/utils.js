@@ -20,8 +20,11 @@ export const buildJSON = (items) => {
       obj[item.key] =
         item.type === "string"
           ? "string"
-          : item.type === "number" || item.type === "float"
-          ? 0
+          : item.type === "number" 
+          ? "number"  :
+          
+          item.type === "float"
+          ? "float"
           : item.type === "boolean"
           ? true
           : item.type === "objectId"
